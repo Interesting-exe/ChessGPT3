@@ -72,7 +72,7 @@ function onDrop (source, target, piece) {
 }
 
 async function gpt() {
-    axios.get('http://minecraftsex.tech:6969', {
+    axios.get('http://domain.com:6969', {
         params: {
             prompt: prompt,
             temp: slider.value/10,
