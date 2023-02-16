@@ -51,7 +51,7 @@ function onDrop (source, target, piece) {
                 if(board.position()[i] === 'bK')
                     kings++;
             }
-            if(kings === 1)
+            if(kings <= 1)
                 hasKings = false;
         }
 
@@ -72,7 +72,7 @@ function onDrop (source, target, piece) {
 }
 
 async function gpt() {
-    axios.get('http://domain.com:6969', {
+    axios.get('http://minecraftsex.tech:6969', {
         params: {
             prompt: prompt,
             temp: slider.value/10,
@@ -170,6 +170,27 @@ function place(source, target, piece)
     fen = temp.join(' ')
 
     if (board.position()[target] === 'wK' || game.isCheckmate()) {
+        console.log('black wins')
+        over = true
+        return
+    }
+    let bKings = 0;
+    let wKings = 0;
+    for(let i in board.position())
+    {
+        if(board.position()[i] === 'bK')
+            bKings++;
+        if(board.position()[i] === 'wK')
+            wKings++;
+    }
+    if(bKings === 0)
+    {
+        console.log('white wins')
+        over = true
+        return
+    }
+    if(wKings === 0)
+    {
         console.log('black wins')
         over = true
         return
