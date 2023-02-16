@@ -1,6 +1,9 @@
 # ChessGPT3
 Play chess against GPT3
 
+## how to use
+create a .env file and put your api key in there, change the host in src/index.js and build using npm run build, open the html file and run the server using node server.js.
+
 ## Credits
 slightly modified version of [chess.js](https://github.com/jhlywa/chess.js) that allows gpt do its thing
 
