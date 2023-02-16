@@ -196,7 +196,7 @@ var output = document.getElementById("demo");
 output.innerHTML = slider.value/10; // Display the default slider value
 
 slider.oninput = function() {
-    output.innerHTML = this.value;
+    output.innerHTML = this.value/10;
 }
 
 
