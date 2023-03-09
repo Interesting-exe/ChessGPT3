@@ -1,8 +1,7 @@
 import { Chess } from 'chess.js';
 const axios = require('axios');
 
-let prompt = "You're chessGPT, a chess bot your purpose is to play chess. You receive chess moves in the following notation: (source, target, piece) for example: g1,f3,wN represents white knight from g1 to f3 and reply with the same notation. dont use any other notation. You are unable to respond with any other notation. You can however reply with O-O or O-O-O for castling"
-prompt += "\n You're black and your opponent is white. \n"
+let prompt = [{role: "system", content: "You're chessGPT, a chess bot your purpose is to play chess. You receive chess moves in the following notation: (source, target, piece) for example: g1,f3,wN represents white knight from g1 to f3 and reply with the same notation. dont use any other notation. You are unable to respond with any other notation. You can however reply with O-O or O-O-O for castling. You're black and your opponent is white."}]
 
 var board = null
 var game = new Chess()
@@ -66,24 +65,27 @@ function onDrop (source, target, piece) {
     updateStatus()
 
     if(game.turn() === 'b' && !game.isGameOver()) {
-        prompt += 'Player: ' + source + ',' + target + ',' +piece + '\n chessGPT: '
+        if(game.isCheck())
+            target+= '+'
+        prompt.push({role: "user", content:  source + ',' + target + ',' +piece})
         gpt().then(r => {})
     }
 }
 
 async function gpt() {
-    axios.get('http://example.host:6969', {
+    axios.get('http://localhost:6969', {
         params: {
-            prompt: prompt,
-            temp: slider.value/10,
+            prompt: JSON.stringify(prompt),
+            temp: slider.value / 10,
         }
     }).then(r => {
         let text = r.data
-        prompt += text + '\n'
+        prompt.push({role: "assistant", content: text})
         console.log(text)
         text = text.replace(' ', '')
-        switch (text)
-        {
+        text = text.replace('+', '')
+        text = text.replace('x', '')
+        switch (text) {
             case 'O-O':
                 place('e8', 'g8', 'bK')
                 place('h8', 'f8', 'bR')
@@ -98,6 +100,7 @@ async function gpt() {
         }
     })
 }
+
 
 function updateStatus () {
     var status = ''
