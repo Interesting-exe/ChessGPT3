@@ -1,5 +1,5 @@
-# ChessGPT3
-Play chess against GPT3
+# ChessGPT3(.5)
+Play chess against GPT3.5
 
 ![ezgif com-optimize](https://user-images.githubusercontent.com/52731127/219515367-a1c8b835-1cd3-4d71-9ff9-23ccae3ce7f7.gif)
 
